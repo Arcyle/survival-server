@@ -1,0 +1,9 @@
+main: de.arcyle.survival_server
+name: ArcyleSurvivalServer
+version: "1.0"
+author: Tzimom
+authors: [xQuiesel]
+commands:
+  travel:
+    usage: /travel <X> <Z>
+    description: Helps you travel to a certain location by displaying a path
