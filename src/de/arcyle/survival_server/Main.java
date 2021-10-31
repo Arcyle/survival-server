@@ -15,10 +15,10 @@ public class Main extends JavaPlugin {
         var features = new Feature[] {new TravelFeature()};
 
         for (var feature : features) {
-            feature.getCommands().forEach((featureCommand) -> {
+            for (var featureCommand : feature.getCommands()) {
                 var command = getCommand(featureCommand.getName());
                 if (command != null) command.setExecutor(featureCommand);
-            });
+            }
         }
     }
 
