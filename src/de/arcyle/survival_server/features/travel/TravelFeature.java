@@ -7,7 +7,7 @@ public class TravelFeature implements Feature {
 
     @Override
     public FeatureCommand[] getCommands() {
-        return new FeatureCommand[] {new TravelCommand()};
+        return new FeatureCommand[] { new TravelCommand() };
     }
 
 }
