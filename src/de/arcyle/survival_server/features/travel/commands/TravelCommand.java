@@ -52,8 +52,9 @@ public class TravelCommand extends FeatureCommand {
 
     private void cancel(CommandSender sender, String[] args) {
         var player = (Player) sender;
+        var uuid = player.getUniqueId();
 
-        var cancelled = TravelDestination.cancel(player);
+        var cancelled = TravelDestination.cancel(uuid);
 
         if (cancelled) {
             player.sendMessage(main.prefix + "§7Cancelled traveling");

@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.HashSet;
+import java.util.UUID;
 
 public class TravelDestination {
 
@@ -16,7 +17,7 @@ public class TravelDestination {
     private final int x;
     private final int z;
     private final int accuracy;
-    private final Player player;
+    private final UUID uuid;
 
     private final int scheduleId;
 
@@ -27,13 +28,14 @@ public class TravelDestination {
     private static final Particle PARTICLE_EFFECT = Particle.CRIT_MAGIC;
     private static final float START_OFFSET = 1f;
     private static final float PARTICLE_SPACING = .2f;
-    private static final float LINE_LENGTH = 5f;
+    private static final float LINE_LENGTH = 3f;
+    private static final float LINE_CLIMB = 1.5f;
 
-    private TravelDestination(int x, int z, int accuracy, Player player) {
+    private TravelDestination(int x, int z, int accuracy, UUID uuid) {
         this.x = x;
         this.z = z;
         this.accuracy = accuracy;
-        this.player = player;
+        this.uuid = uuid;
 
         ACTIVE_TRAVEL_DESTINATIONS.add(this);
 
@@ -41,6 +43,9 @@ public class TravelDestination {
     }
 
     private void showGuide() {
+        var player = Bukkit.getPlayer(uuid);
+        if (player == null || !player.isOnline()) return;
+
         var currentLocation = player.getLocation();
         var currentX = currentLocation.getX();
         var currentZ = currentLocation.getZ();
@@ -50,17 +55,18 @@ public class TravelDestination {
         var distanceSquared = distanceX * distanceX + distanceZ * distanceZ;
 
         if (distanceSquared <= accuracy * accuracy) {
-            onArrive();
+            onArrive(player);
             return;
         }
 
+        var particleCount = LINE_LENGTH / PARTICLE_SPACING;
         var direction = new Vector(x - currentLocation.getX(), 0f, z - currentLocation.getZ()).normalize();
-        var step = direction.clone().multiply(PARTICLE_SPACING);
-        var particleLocation = player.getLocation().clone().add(0f, .5f, 0f);
+        var step = direction.clone().multiply(PARTICLE_SPACING).setY(LINE_CLIMB / particleCount);
+        var particleLocation = player.getLocation().clone();
 
         particleLocation.add(direction.clone().multiply(START_OFFSET));
 
-        for (var i = 0; i < LINE_LENGTH / PARTICLE_SPACING; i++) {
+        for (var i = 0; i < particleCount; i++) {
             particleLocation.add(step);
             player.spawnParticle(PARTICLE_EFFECT, particleLocation, 1, 0, 0, 0, 0);
         }
@@ -71,7 +77,9 @@ public class TravelDestination {
     }
 
     public static void start(int x, int z, Player player) {
-        cancel(player);
+        var uuid = player.getUniqueId();
+
+        cancel(uuid);
 
         var playerLocation = player.getLocation();
 
@@ -83,21 +91,23 @@ public class TravelDestination {
 
         var accuracy = (int) Math.max((distance / DISTANCE_ACCURACY_RATIO), 3f);
 
-        new TravelDestination(x, z, accuracy, player);
+        new TravelDestination(x, z, accuracy, uuid);
     }
 
-    private void onArrive() {
-        cancel(player);
+    private void onArrive(Player player) {
+        cancel(uuid);
 
         player.sendMessage(main.prefix + "§aYou have arrived at your destination");
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
     }
 
-    public static boolean cancel(Player player) {
+    public static boolean cancel(UUID uuid) {
         var cancelled = false;
         var removed = new HashSet<TravelDestination>();
 
         for (var travelDestination : ACTIVE_TRAVEL_DESTINATIONS) {
+            if (!uuid.equals(travelDestination.uuid)) continue;
+
             Bukkit.getScheduler().cancelTask(travelDestination.scheduleId);
             removed.add(travelDestination);
             cancelled = true;
