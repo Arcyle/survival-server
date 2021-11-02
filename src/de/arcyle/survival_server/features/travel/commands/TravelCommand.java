@@ -1,19 +1,21 @@
-package de.arcyle.survival_server.features.travel;
+package de.arcyle.survival_server.features.travel.commands;
 
 import de.arcyle.survival_server.Main;
 import de.arcyle.survival_server.core.CommandSyntax;
 import de.arcyle.survival_server.core.FeatureCommand;
+import de.arcyle.survival_server.features.travel.TravelDestination;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class TravelCommand implements FeatureCommand {
+public class TravelCommand extends FeatureCommand {
 
     private final Main main = Main.getInstance();
 
     public String getName() {
         return "travel";
     }
+    public String[] getAliases() { return new String[] { }; }
 
     public CommandSyntax getSyntax() {
         return new CommandSyntax(

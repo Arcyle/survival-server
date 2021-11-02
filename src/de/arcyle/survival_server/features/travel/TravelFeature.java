@@ -2,12 +2,15 @@ package de.arcyle.survival_server.features.travel;
 
 import de.arcyle.survival_server.core.Feature;
 import de.arcyle.survival_server.core.FeatureCommand;
+import de.arcyle.survival_server.core.FileManager;
+import de.arcyle.survival_server.features.travel.commands.TravelCommand;
 
-public class TravelFeature implements Feature {
+public class TravelFeature extends Feature {
 
-    @Override
-    public FeatureCommand[] getCommands() {
+    public FeatureCommand[] initCommands() {
         return new FeatureCommand[] { new TravelCommand() };
     }
+
+    public FileManager[] initFileManagers() { return new FileManager[] { }; }
 
 }

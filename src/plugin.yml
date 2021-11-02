@@ -4,7 +4,3 @@ version: "1.0"
 api-version: "1.17"
 author: Tzimom
 authors: [xQuiesel]
-commands:
-  travel:
-    usage: /travel <X> <Z>
-    description: Helps you travel to a certain location by displaying a path
