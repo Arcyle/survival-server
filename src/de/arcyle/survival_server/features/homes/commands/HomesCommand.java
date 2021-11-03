@@ -6,11 +6,11 @@ import de.arcyle.survival_server.core.FeatureCommand;
 import de.arcyle.survival_server.features.homes.Home;
 import de.arcyle.survival_server.features.homes.HomesFeature;
 import de.arcyle.survival_server.features.homes.HomesManager;
-import net.minecraft.network.chat.ChatMessageType;
-import net.minecraft.network.chat.IChatBaseComponent;
-import net.minecraft.network.protocol.game.PacketPlayOutChat;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.Comparator;
@@ -55,27 +55,12 @@ public class HomesCommand extends FeatureCommand {
             var name = home.name();
             var location = home.location();
 
-            var json = "{" +
-                            "\"text\":\"" + main.prefix + "§8- §e" + name + " §8[§7" + id + "§8]\"," +
-                            "\"clickEvent\": {" +
-                                "\"action\":\"run_command\"," +
-                                "\"value\":\"/home " + id + "\"" +
-                            "}," +
-                            "\"hoverEvent\": {" +
-                                "\"action\":\"show_text\"," +
-                                "\"value\":\"§aClick to teleport §8(§b" +
-                                    location.getBlockX() + " §7/ §b" +
-                                    location.getBlockY() + " §7/ §b" +
-                                    location.getBlockZ() +
-                                "§8)\"" +
-                            "}" +
-                        "}";
+            var textComponent = new TextComponent(main.prefix + "§8- §e" + name + " §8[§7" + id + "§8]");
+            textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/home " + id));
+            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§aClick to teleport §8(§b"
+                    + location.getBlockX() + " §7/ §b" + location.getBlockY() + " §7/ §b" + location.getBlockZ() + "§8)")));
 
-            var baseComponent = IChatBaseComponent.ChatSerializer.a(json);
-            var packet = new PacketPlayOutChat(baseComponent, ChatMessageType.a, player.getUniqueId());
-            var craftPlayer = (CraftPlayer) player;
-
-            craftPlayer.getHandle().b.sendPacket(packet);
+            player.spigot().sendMessage(textComponent);
         });
     }
 

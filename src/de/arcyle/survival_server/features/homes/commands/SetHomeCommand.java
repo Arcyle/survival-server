@@ -36,10 +36,12 @@ public class SetHomeCommand extends FeatureCommand {
             return;
         }
 
-        homesManager.deleteHome(uuid, args[0], true);
-        homesManager.setHome(uuid, new Home(homesManager.nextId(uuid), args[0], player.getLocation()));
+        var home = new Home(homesManager.nextId(uuid), args[0], player.getLocation());
 
-        player.sendMessage(main.prefix + "§7The home §e" + args[0] + " §7was set");
+        homesManager.deleteHome(uuid, args[0], true);
+        homesManager.setHome(uuid, home);
+
+        player.sendMessage(main.prefix + "§7The home §e" + args[0] + " §8[§7" + home.id() + "§8] §7was set");
     }
 
 }

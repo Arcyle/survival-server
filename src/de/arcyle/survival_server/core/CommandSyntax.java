@@ -9,4 +9,5 @@ public record CommandSyntax(SubCommand... subCommands) {
     public interface CommandExecutor {
         void execute(CommandSender sender, String[] args);
     }
+
 }
