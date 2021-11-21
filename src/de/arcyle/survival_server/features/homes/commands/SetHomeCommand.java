@@ -31,12 +31,14 @@ public class SetHomeCommand extends FeatureCommand {
         var player = (Player) sender;
         var uuid = player.getUniqueId();
 
-        if (homesManager.getHome(uuid, args[0], true) == null && homesManager.getHomes(uuid).size() >= HomesFeature.MAX_HOMES) {
+        var currentHome = homesManager.getHome(uuid, args[0], true);
+
+        if (currentHome == null && homesManager.getHomes(uuid).size() >= HomesFeature.MAX_HOMES) {
             player.sendMessage(main.prefix + "§cYou may not have more than " + HomesFeature.MAX_HOMES + " homes");
             return;
         }
 
-        var home = new Home(homesManager.nextId(uuid), args[0], player.getLocation());
+        var home = new Home(currentHome == null ? homesManager.nextId(uuid) : currentHome.id(), args[0], player.getLocation());
 
         homesManager.deleteHome(uuid, args[0], true);
         homesManager.setHome(uuid, home);
