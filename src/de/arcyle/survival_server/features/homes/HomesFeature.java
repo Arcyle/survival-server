@@ -7,6 +7,7 @@ import de.arcyle.survival_server.features.homes.commands.DeleteHomeCommand;
 import de.arcyle.survival_server.features.homes.commands.HomeCommand;
 import de.arcyle.survival_server.features.homes.commands.HomesCommand;
 import de.arcyle.survival_server.features.homes.commands.SetHomeCommand;
+import org.bukkit.event.Listener;
 
 public class HomesFeature extends Feature {
 
@@ -25,6 +26,10 @@ public class HomesFeature extends Feature {
                 new DeleteHomeCommand(homesManager),
                 new HomesCommand(homesManager)
         };
+    }
+
+    public Listener[] initEventHandlers() {
+        return new Listener[] {};
     }
 
 }

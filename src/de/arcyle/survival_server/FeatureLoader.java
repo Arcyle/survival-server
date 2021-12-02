@@ -2,6 +2,7 @@ package de.arcyle.survival_server;
 
 import de.arcyle.survival_server.core.Feature;
 import de.arcyle.survival_server.core.FeatureCommand;
+import de.arcyle.survival_server.features.death_counter.DeathCounterFeature;
 import de.arcyle.survival_server.features.homes.HomesFeature;
 import de.arcyle.survival_server.features.travel.TravelFeature;
 import org.bukkit.Bukkit;
@@ -21,7 +22,7 @@ public class FeatureLoader {
     private Constructor<PluginCommand> pluginCommandConstructor;
     private CommandMap commandMap;
 
-    private final Feature[] features = new Feature[] { new TravelFeature(), new HomesFeature() };
+    private final Feature[] features = new Feature[] { new TravelFeature(), new HomesFeature(), new DeathCounterFeature() };
 
     public FeatureLoader() {
         try {

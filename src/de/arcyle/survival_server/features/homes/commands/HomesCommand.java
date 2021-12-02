@@ -60,6 +60,7 @@ public class HomesCommand extends FeatureCommand {
             textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§aClick to teleport §8(§b"
                     + location.getBlockX() + " §7/ §b" + location.getBlockY() + " §7/ §b" + location.getBlockZ() + "§8)")));
 
+            player.spigot().sendMessage();
             player.spigot().sendMessage(textComponent);
         });
     }

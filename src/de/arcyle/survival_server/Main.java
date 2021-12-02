@@ -11,6 +11,7 @@ public class Main extends JavaPlugin {
     public final String prefix = "§6Survival Server §8| §r";
     public final String playerOnly = "§cYou need to be a player";
     public final String invalidNumber(String s) { return "§c" + s + " is not a valid number"; }
+    public final String playerNotOnline = "§cThat player is not online";
 
     public Main() {
         instance = this;
