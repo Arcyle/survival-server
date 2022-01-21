@@ -27,8 +27,8 @@ public class TravelDestination {
 
     private static final Particle PARTICLE_EFFECT = Particle.CRIT_MAGIC;
     private static final float START_OFFSET = 1f;
-    private static final float PARTICLE_SPACING = .2f;
-    private static final float LINE_LENGTH = 3f;
+    private static final float PARTICLE_SPACING = .25f;
+    private static final float LINE_LENGTH = 8f;
     private static final float LINE_CLIMB = 1.5f;
 
     private TravelDestination(int x, int z, int accuracy, UUID uuid) {
@@ -72,7 +72,7 @@ public class TravelDestination {
         }
 
         var distance = Math.sqrt(distanceSquared);
-        player.sendTitle(" ", "§7You are §e" + (int) distance + " §7blocks away from your destination " +
+        player.sendTitle(" ", "§7§e" + (int) distance + " §7blocks left to travel " +
                 "§8(§e" + (int) distanceX + " §7/ §e" + (int) distanceZ + "§8)", 0, 5, 20);
     }
 

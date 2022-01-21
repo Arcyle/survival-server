@@ -1,6 +1,6 @@
 main: de.arcyle.survival_server.Main
 name: ArcyleSurvivalServer
 version: "1.0"
-api-version: "1.17"
+api-version: "1.16"
 author: Tzimom
 authors: [xQuiesel]

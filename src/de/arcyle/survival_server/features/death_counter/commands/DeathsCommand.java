@@ -36,7 +36,7 @@ public class DeathsCommand extends FeatureCommand {
         var player = (Player) sender;
         var deathCount = deathCounterManager.getDeathCount(player.getUniqueId());
 
-        sender.sendMessage(main.prefix + "§7Du hast §e" + deathCount + " §7Tode");
+        sender.sendMessage(main.prefix + "§7You have §e" + deathCount + " §7deaths");
     }
 
     private void deathsOther(CommandSender sender, String[] args) {
@@ -49,7 +49,7 @@ public class DeathsCommand extends FeatureCommand {
         }
 
         var deathCount = deathCounterManager.getDeathCount(target.getUniqueId());
-        sender.sendMessage(main.prefix + "§e" + target.getName() + " §7hat §e" + deathCount + " §7Tode");
+        sender.sendMessage(main.prefix + "§e" + target.getName() + " §7has §e" + deathCount + " §7deaths");
     }
 
 }
